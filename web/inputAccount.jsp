@@ -91,7 +91,7 @@
                 function (data) {
                     if(data=='200'){
                         //卡号存在跳转到密码输入页面
-                        window.location.href="inputLoginPWD.jsp";
+                        window.location.href="inputLoginPWD.jsp?cardId="+cardId;
                     }else{
                         layui.use('layer', function () {
                             var layer = layui.layer;

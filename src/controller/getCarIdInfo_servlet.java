@@ -2,12 +2,14 @@ package controller;
 
 import dao.cardDao;
 import entity.CardInfo;
+import sun.plugin.dom.core.Element;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
@@ -42,6 +44,12 @@ public class getCarIdInfo_servlet extends HttpServlet {
                         //request.getRequestDispatcher("inputLoginPWD.jsp").forward(request,response);
                         System.out.println("卡号存在，返回200");
                         out.write("200");
+
+                        //存session
+                        HttpSession session=request.getSession();
+                        CardInfo card = new CardInfo();
+                        card.setCardId(cardID);
+                        session.setAttribute("sec_cardInfo",card);
                     }else{
                         System.out.println(cardID+"卡号不存在！");
                         out.write("卡号不存在！");
