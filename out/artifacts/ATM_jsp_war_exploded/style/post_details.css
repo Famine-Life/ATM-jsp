@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+}
+html{}
+body{
+    font-size: 18px;
+    font-family: Georgia, serif;
+}
+
+.navbar-text{
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+	font-size:16pt;
+}
+.container{
+    margin-top:106px;
+}
+.main{
+    margin: 0% 6%;
+    padding: 2% 8% 4% 8%;
+    border: 1px solid LightGrey;
+}
+h2{
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
+    margin-bottom: 40px;
+    padding: 5px;
+    border-bottom: 2px LightGrey solid;
+    width: 98%;
+    line-height: 150%;
+    color: #666666;
+    
+}
+#preview{
+    width:100%;
+    height: auto;
+}

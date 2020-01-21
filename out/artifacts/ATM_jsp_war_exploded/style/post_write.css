@@ -1,0 +1,134 @@
+html{
+    margin:0;
+    padding:0;
+}
+body{
+    width: 100%;
+    height: 100%;
+    margin:0;
+    padding:0;
+    background-image: url(./images/机器人.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position:50% 50%;
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-color: #646461;
+    font-family: Georgia, serif;
+    -webkit-transition: All 2s ease;
+    -moz-transition: All 2s ease;
+    -o-transition: All 2s ease;
+    -ms-transition: All 2s ease;
+    transition: All 2s ease;
+}
+.container {
+    margin:0;
+    padding:0;
+    background-color: rgba(240,240,240,0.0);
+    border-radius: 1em;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top:30px;
+    width: 100%;
+    height: 90%;
+    max-height: 100%;
+    min-width: 90%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    transition: height 1s ease;
+    transition: top 1s ease;
+}
+
+
+.txttitle{
+    margin:0;
+    padding:0;
+    width: 100%;
+    background-color: rgba(255,255,255,0.8);
+}
+.title-form{
+    display: inline;
+}
+.title-input{
+    width:90%;
+    height: 36px;
+    margin-left:10px;
+    margin-right:10px;
+    background-color: rgba(180,180,180,0.8);
+    border-radius:5px;
+    outline:none;
+}
+.txttitle .btn-danger{
+    height: 40px;
+    color:#fff;
+    font-family: Georgia, serif;
+}
+.txtselect{
+    padding-top:10px;
+    padding-bottom:4px;
+    color:#fff;
+    font-family: '行楷';
+    background-color: rgba(120,120,120,0.8);
+    text-align: center;
+}
+.select-items{
+    margin-left:30px;
+}
+
+
+
+.top{
+    height: auto;
+}
+
+.main{
+    width:100%;
+    height: 85%;
+    margin:0 auto;
+    border: 2px solid green;
+    overflow: hidden;
+}
+.main-left,.main-right{
+    float:left;
+    width: 50%;
+    height: 100%;
+    padding:2px;
+    
+}
+.main-left{
+    border-right: 1px solid black;
+}
+.main-right{
+    border-left: 1px solid black;
+    background-color: rgba(255,255,255,0.8);
+}
+.content-form{
+    height: 100%;
+}
+
+#text-input{
+    margin:0;
+    padding-top:10px;
+    width:100%;
+    height: 100%;
+    overflow: auto;
+    word-break: break-all;
+    background-color: rgba(241,241,241,0.8);
+    outline: none;
+}
+#preview{
+    overflow: auto;
+    width:100%;
+    height: 100%;
+}
+
+.bg-dark{
+    background-color: rgba(52,58,64,0.8)!important;
+}
