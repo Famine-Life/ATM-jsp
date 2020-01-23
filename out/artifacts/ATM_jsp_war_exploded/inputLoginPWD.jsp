@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>密码页面</title>
+    <title>登录密码页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -40,7 +40,7 @@
     </div>
     <footer>
         <a href="index.jsp"> <img width="29%" src="static/images/return.png" ></a>
-        <img id="m2" src="static/images/huishan.png" >
+        <img id="m2" onclick="BackSpace()" src="static/images/huishan.png" >
     </footer>
 <%--    <form id="my_form" method="get"></form>--%>
 </div>
@@ -91,6 +91,7 @@
                 $(".password-div ul li").text("");
             });
 
+
             // /*退卡*/
             // $("#exit").click(function () {
             //     window.location.href = "exit.html"
@@ -98,6 +99,32 @@
 
         });
     });
+
+    //回删点击
+    function BackSpace() {
+        var m2 = document.querySelector("#m2");
+        var pw = $("input[name = 'password']").val(); //定义pw为name是password的input框的输入值
+
+        //删除pw最后一个数字
+        pw=pw.substring(0,pw.length-1);
+        console.log("pw 回删:",pw);
+
+        //设置焦点
+        $("input[name = 'password']").focus();
+
+        //重新渲染li的样式
+        var number = 6;   //定义输入最大值
+        $("input[name = 'password']").val(pw); //设置输入密码为修改过后的
+        var list = $(".password-div ul li");  //定义list是li
+        for (var i = 0; i < number; i++) {    //for循环遍历将·放入li标签
+            if (pw[i]) {
+                $(list[i]).text("·");
+            } else {
+                $(list[i]).text("");
+            };
+        };
+    }
+
 </script>
 </body>
 </html>

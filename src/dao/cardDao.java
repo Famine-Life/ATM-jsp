@@ -50,7 +50,7 @@ public class cardDao {
                 card.setCardId(rs.getString(1));
                 card.setCurType(rs.getString(2));
                 card.setSavingType(rs.getBoolean(3));
-                card.setMoney(rs.getBigDecimal(4));
+                card.setMoney(rs.getString(4));
                 card.setPrestore(rs.getInt(5));
                 card.setPassword(rs.getString(6));
                 card.setOpenDate(rs.getTimestamp(7));
@@ -74,7 +74,7 @@ public class cardDao {
         try {
              conn=DBhelper.getConnection();
              ps = conn.prepareStatement(sql);
-            ps.setBigDecimal(1, card.getMoney());
+            ps.setString(1, card.getMoney());
             ps.setString(2, card.getCardId());
             ps.execute();
         } catch (SQLException e) {

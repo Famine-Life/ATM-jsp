@@ -1,13 +1,12 @@
 package entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class CardInfo {
     private String cardId;  //卡号
     private String curType; //币种
     private Boolean savingType; //0活期，1定期
-    private BigDecimal money;   //钱
+    private String money;   //钱
     private Integer prestore;   //预存余额
     private String password;    //密码
     private Date openDate;  //开户时间
@@ -46,11 +45,11 @@ public class CardInfo {
         this.savingType = savingType;
     }
 
-    public BigDecimal getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(BigDecimal money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 
