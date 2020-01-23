@@ -39,7 +39,7 @@
         </div>
     </div>
     <footer>
-        <a href="index.jsp"> <img width="29%" src="static/images/return.png" ></a>
+        <a href="business.jsp"> <img width="29%" src="static/images/return.png" ></a>
         <img id="m2" onclick="BackSpace()" src="static/images/huishan.png" >
     </footer>
     <%--    <form id="my_form" method="get"></form>--%>
@@ -53,28 +53,32 @@
        CardInfo sec_cardInfo = (CardInfo) session.getAttribute("sec_cardInfo");
       // String cardId = sec_cardInfo.getCardId();
      %>
-
+    //获取传入参数
+    var method ="<%=request.getParameter("method")%>";
+    var money = "<%=request.getParameter("money")%>";
+    var to_cardId=null;
+    console.log(method,money,to_cardId);
     layui.use('layer', function () {
-        //获取传入参数
-        var method ="<%=request.getParameter("method")%>";
-        var money = "<%=request.getParameter("money")%>";
-        var to_cardId=null;
-        console.log(method,money,to_cardId);
+
+
         //处理金额的url
         var postUrl="cardMoney_servlet";
         //成功后需要跳转的location
-        var localtion="print_success.jsp";
+        var to_location="print_success.jsp";
         if(method=="qukuan"){
-            localtion="out_money.jsp";    //取款页面应该提示正在出钱
+            to_location="out_money.jsp";    //取款页面应该提示正在出钱
+        }
+        if(method=="chaxun"){
+            to_location="chaxun.jsp"
         }
         if(method=="zhuanzhang"){
             //转账要获取另一个账号
-            to_cardId = <%=request.getParameter("to_cardId")%>
+            to_cardId = "<%=request.getParameter("to_cardId")%>";
         }
-
+        console.log(method,money,to_cardId);
         var layer = layui.layer;
         //从session获取卡号
-        var se_cardId = <%=sec_cardInfo.getCardId()%>;
+        var se_cardId = "<%=sec_cardInfo.getCardId()%>";
         /*输入框js事件*/
         $(".password-div input").on("input", function (e) { //标签为password-div下的input添加oninput事件
             var number = 6;   //定义输入最大值
@@ -95,11 +99,16 @@
                         console.log("data:",data)
                         if (data === "success") {
                             //跳转到业务选择页面
-                            window.location.href=localtion;
+                            window.location.href=to_location;
                         } else if (data === "error") {
                             layer.msg("密码错误，请重新输入。");
                             $("input[name = 'password']").val("");
                             $(".password-div ul li").text("");
+                        }else if(data==="buzu"){
+                            layer.msg("余额不足, 5秒后为你返回业务选择页面！");
+                            setTimeout(function () {
+                                window.location.href="business.jsp"
+                            },5000);
                         }
                     });
             }

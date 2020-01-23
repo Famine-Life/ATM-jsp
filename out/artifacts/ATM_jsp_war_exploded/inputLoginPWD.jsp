@@ -52,7 +52,7 @@
     layui.use('layer', function () {
         var layer = layui.layer;
         //获取卡号
-        var cardId = <%=request.getParameter("cardId")%>;
+        var cardId = "<%=request.getParameter("cardId")%>";
         /*输入框js事件*/
         $(".password-div input").on("input", function (e) { //标签为password-div下的input添加oninput事件
             var number = 6;   //定义输入最大值

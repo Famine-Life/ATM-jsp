@@ -1,4 +1,4 @@
-<%--
+<%@ page import="entity.CardInfo" %><%--
   Created by IntelliJ IDEA.
   User: wonder
   Date: 2020/1/22
@@ -78,42 +78,60 @@
     </div>
     <footer>
         <img id="continue" width="29%" src="static/images/continue.png">
-        <img id="m2" width="29%" src="static/images/return.png">
+        <a href="business.jsp"><img id="m2" width="29%" src="static/images/return.png"></a>
     </footer>
 </div>
-<form id="myform" action="@{~/transferDetails}" method="post">
-    <input type="hidden" name="cardId">
-    <input type="hidden" name="username">
-</form>
 <script src="static/lib/jquery/jquery.min.js"></script>
 <script src="static/lib/layui/layui.js"></script>
 <script src="static/lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
+    <%
+      CardInfo card = (CardInfo) session.getAttribute("sec_cardInfo");
+      String cardId = card.getCardId();
+      request.setAttribute("cardId",cardId);
+  %>
+    var cardId = "<%=card.getCardId()%>";
+
     $(function () {
+        var to_location = "zhuanzhang_money.jsp";
+        var method = "zhuanzhang";
+
         $("#card2").hide();
         $("#continue").click(function () {
-            var cardId1 = $("#card1").val();
-            $("#card1").hide();
-            $("#card2").show();
-            var cardId2 = $("#card2").val();
-            if (cardId2 != "" && cardId1 != "") {
-                if (cardId1 === cardId2) {
-                    $.post("/queryCardInfo", {"cardId": cardId2}, function (data) {
-                        if (data.res === "success") {
-                            $('input[name=cardId]').val(data.meg);
-                            $('input[name=username]').val(data.object.customerName);
-                            $("#myform").submit();
-                        } else if (data.res === "error") {
-                            layui.use('layer', function () {
-                                var layer = layui.layer;
-                                layer.msg(data.meg);
-                            });
-                        }
-                    });
-                } else {
+            var to_cardId1 = $("#card1").val();
+            if(to_cardId1==""){
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg("卡号不能为空");
+                });
+            }else if(to_cardId1==cardId){
+                layui.use('layer', function () {
+                    var layer = layui.layer;
+                    layer.msg("不能转账给自己！");
+                });
+            }else{
+                console.log(to_cardId1)
+                $("#card1").hide();
+                $("#card2").show();
+                var to_cardId2 = $("#card2").val();
+                if (to_cardId2 != "") {
+                    if (to_cardId1 === to_cardId2) {
+                        //跳转
+                        window.location.href = to_location+"?to_cardId="+to_cardId2;
+                    }else {
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg("两次输入账号不一致，请重新输入");
+                        });
+                        $("#card2").val("");
+                        $("#card1").val("");
+                        $("#card1").show();
+                        $("#card2").hide();
+                    }
+                }else{
                     layui.use('layer', function () {
                         var layer = layui.layer;
-                        layer.msg("两次输入账号不一致，请重新输入");
+                        layer.msg("再次输入账号！");
                     });
                 }
             }

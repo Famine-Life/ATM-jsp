@@ -80,14 +80,6 @@
             }else{
                 alert(data);
             }
-        // if (data === "success") {
-        //     var allMoney = data.money;
-        //     var usable = data.money - data.object.prestore;
-        //     $("#usableMoney").text("可 用 金 额：" + usable);
-        //     $("#allMoney").text("全 部 金 额：" + allMoney)
-        // } else if (data.res === "error") {
-        //     alert(data.meg);
-        // }
     });
 </script>
 </body>
