@@ -1,4 +1,4 @@
-<%--
+<%@ page import="entity.CardInfo" %><%--
   Created by IntelliJ IDEA.
   User: wonder
   Date: 2020/1/22
@@ -14,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="static/lib/layui/css/layui.css">
     <link href="static/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-          rel="stylesheet">
     <style>
         #main {
             background-size: cover;
@@ -64,16 +63,31 @@
 <script src="static/lib/layui/layui.js"></script>
 <script src="static/lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
-    var cardId = /*[[${#session.getAttribute('cardId')}]]*/'';
-    $.post('/getMoney',{"cardId":cardId}, function (data) {
-        if (data.res === "success") {
-            var allMoney = data.object.money;
-            var usable = data.object.money - data.object.prestore;
-            $("#usableMoney").text("可 用 金 额：" + usable);
-            $("#allMoney").text("全 部 金 额：" + allMoney)
-        } else if (data.res === "error") {
-            alert(data.meg);
-        }
+    <%
+        CardInfo card = (CardInfo) session.getAttribute("sec_cardInfo");
+    %>
+    var cardId = "<%=card.getCardId()%>";
+
+    $.post('cardMoney_servlet',{"method":"chaxun","cardId":cardId},
+        function (data) {
+            console.log(data);
+            console.log(data.code);
+            if(data.code==="success"){
+                var allMoney = data.allMoney;
+                var usable = data.usable;
+                $("#usableMoney").text("可 用 金 额：" + usable);
+                $("#allMoney").text("全 部 金 额：" + allMoney)
+            }else{
+                alert(data);
+            }
+        // if (data === "success") {
+        //     var allMoney = data.money;
+        //     var usable = data.money - data.object.prestore;
+        //     $("#usableMoney").text("可 用 金 额：" + usable);
+        //     $("#allMoney").text("全 部 金 额：" + allMoney)
+        // } else if (data.res === "error") {
+        //     alert(data.meg);
+        // }
     });
 </script>
 </body>

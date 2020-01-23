@@ -62,8 +62,36 @@ public class cardMoney_servlet extends HttpServlet {
 
             }
 
+            //查询余额
+            if(method.equals("chaxun")){
+                response.setContentType("application/json; charset=utf-8");
+                PrintWriter out_cx = response.getWriter();
+
+                cardDao cardDao = new cardDao();
+                CardInfo chaxun_card = cardDao.getCardById(cardId);
+                Integer prestore = chaxun_card.getPrestore();//预存金额
+                String allMoney = chaxun_card.getMoney();   //全部余额
+                Integer usable = Integer.valueOf(allMoney)-prestore;    //可用金额
+
+                //拼接json  {"code":"success","allMoney":allMoney,"usable":usable}
+                String result = "{\"code\":" + "\"success\""+","+"\"allMoney\":"+"\""+ allMoney + "\"" +","+"\"usable\":"+"\""+usable+"\""+"}";
+                System.out.println("result json:"+result);
+                out_cx.write(result);
+                System.out.println("查询余额--全部金额为："+allMoney+"，可用金额："+usable);
+
+                out_cx.close();
+            }
+
+            //未捕获请求，返回error
+            out.write("error");
+            System.out.println("cardMoney_servlet error-----");
+
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            if (out != null) {
+                out.close();
+            }
         }
 
 
