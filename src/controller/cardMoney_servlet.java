@@ -45,8 +45,8 @@ public class cardMoney_servlet extends HttpServlet {
             //调用dao通过id获得卡号信息
             CardInfo card = cardDao.getCardById(cardId);
 
-            //查询余额
-            if(method.equals("chaxun")){
+                //查询余额
+                if(method.equals("chaxun")){
                 response.setContentType("application/json; charset=utf-8");     //返回json
                 PrintWriter out_cx = response.getWriter();
 
@@ -68,23 +68,14 @@ public class cardMoney_servlet extends HttpServlet {
 
                 //取款功能
                 if(method.equals("qukuan")){
-                    //如果为取款操作，确认密码正确，然后卡号扣除金额，成功返回success
-
+                    //如果为取款操作
                     //减去要取得金额
                     Integer update_money=Integer.valueOf(card.getMoney())-Integer.valueOf(money);
                     card.setMoney(update_money.toString());
-                    //匹配密码
-                    if(card.getPassword().equals(pwd)){
-                        //密码相同, 扣除金额
-                        cardDao.updateCard_money(card);
-                        out.write("success");
-                        System.out.println("取款"+money+"成功！");
-                    }else{
-                        //密码不同
-                        out.write("error");
-                        System.out.println("密码错误!");
-                        System.out.println("卡号，密码:"+cardId+","+pwd);
-                    }
+                    //扣除金额
+                    cardDao.updateCard_money(card);
+                    out.write("success");
+                    System.out.println("取款"+money+"成功！");
 
                 }
 
@@ -119,6 +110,17 @@ public class cardMoney_servlet extends HttpServlet {
                         out.write("buzu");
                     }
 
+                }
+
+                //存款功能
+                if(method.equals("cunkuan")){
+                    //加上放入的金额
+                    Integer update_money=Integer.valueOf(card.getMoney())+Integer.valueOf(money);
+                    card.setMoney(update_money.toString());
+                    //数据库存入金额
+                    cardDao.updateCard_money(card);
+                    out.write("success");
+                    System.out.println("存款"+money+"成功！");
                 }
 
 

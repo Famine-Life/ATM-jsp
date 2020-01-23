@@ -67,7 +67,7 @@
     <div id="main_top">
         <span style="font-size: 50px">请 将 钞 票 放 入 钞 票 口</span>
         <h3>please select next step</h3>
-        <form id="my_form" action="/cardMoney_servlet" class="form-inline">
+        <form id="my_form" class="form-inline">
             <div class="form-group">
                 <input type="text" name="money" style="height: 50px;font-size: 24px;" class="form-control"
                        autofocus="autofocus"
@@ -85,17 +85,20 @@
 <script src="static/lib/layui/layui.js"></script>
 <script src="static/lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
+    var to_localtion = "checkPassword.jsp";
+    var method = "cunkuan";
+
     $(function () {
         //监听存款的点击
         $("#continue").click(function () {
             var money = $("input[name='money']").val();
-            if (money % 100 != 0) {
+            if (money!=0&&money % 100 != 0) {
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg("输入金额必须为100的倍数");
                 });
             } else {
-                $("#my_form").submit();
+                window.location.href = to_localtion+"?method="+method+"&money="+money;
             }
         });
 

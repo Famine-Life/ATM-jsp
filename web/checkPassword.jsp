@@ -53,14 +53,15 @@
        CardInfo sec_cardInfo = (CardInfo) session.getAttribute("sec_cardInfo");
       // String cardId = sec_cardInfo.getCardId();
      %>
+    //从session获取卡号
+    var se_cardId = "<%=sec_cardInfo.getCardId()%>";
+
     //获取传入参数
     var method ="<%=request.getParameter("method")%>";
     var money = "<%=request.getParameter("money")%>";
     var to_cardId=null;
     console.log(method,money,to_cardId);
     layui.use('layer', function () {
-
-
         //处理金额的url
         var postUrl="cardMoney_servlet";
         //成功后需要跳转的location
@@ -75,10 +76,14 @@
             //转账要获取另一个账号
             to_cardId = "<%=request.getParameter("to_cardId")%>";
         }
+        if (method=="changePwd"){   //修改密码，更改跳转路径、提交路径
+            to_location = "changePassword.jsp";
+            postUrl = "check_password_servlet";
+        }
+
         console.log(method,money,to_cardId);
         var layer = layui.layer;
-        //从session获取卡号
-        var se_cardId = "<%=sec_cardInfo.getCardId()%>";
+
         /*输入框js事件*/
         $(".password-div input").on("input", function (e) { //标签为password-div下的input添加oninput事件
             var number = 6;   //定义输入最大值

@@ -66,27 +66,27 @@
     <header>
     </header>
     <div id="main_top">
-        <span style="font-size: 50px">请 输 入 新 密 码</span>
+        <span style="font-size: 50px">请 再 次 输 入 新 密 码</span>
         <h3>please select next step</h3>
-            <div class="password-div">
-                <label id="input1" for="pwd1" class="password-lable">
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <input id="pwd1" type="password" name="password" maxlength="6"
-                           autofocus="autofocus">
+        <div class="password-div">
+            <label id="input2" for="pwd2" class="password-lable">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <input id="pwd2" type="password" name="password" maxlength="6"
+                       autofocus="autofocus">
 
-                </label>
-            </div>
+            </label>
+        </div>
     </div>
     <footer>
-<%--        <img id="continue" width="29%" src="static/images/continue.png">--%>
-        <a href="business.jsp"><img  width="29%" src="static/images/return.png"></a>
+        <%--        <img id="continue" width="29%" src="static/images/continue.png">--%>
+        <a href="business.jsp"><img width="29%" src="static/images/return.png"></a>
         <img id="m2" onclick="BackSpace()" src="static/images/huishan.png" >
     </footer>
 </div>
@@ -97,24 +97,54 @@
     <%
       CardInfo card = (CardInfo) session.getAttribute("sec_cardInfo");
   %>
+    var new_pwd1 = "<%=request.getParameter("new_password1")%>"
     var se_cardId = "<%=card.getCardId()%>";
+    var postUrl = "changePassword_servlet";
+
     layui.use('layer', function () {
         /*输入框js事件*/
         $(".password-div input").on("input", function (e) { //标签为password-div下的input添加oninput事件
             var number = 6;   //定义输入最大值
-            var pw = $("input[name = 'password']").val(); //定义pw为name是password的input框的输入值
+            var new_pwd2 = $("input[name = 'password']").val(); //获取密码
             var list = $(".password-div ul li");  //定义list是li
             for (var i = 0; i < number; i++) {    //for循环遍历将·放入li标签
-                if (pw[i]) {
+                if (new_pwd2[i]) {
                     $(list[i]).text("·");
                 } else {
                     $(list[i]).text("");
                 };
             };
             //表单输入完后触发
-            if (pw.length == 6) {
-                //alert(pw);
-                window.location.href="changePassword2.jsp?new_password1="+pw;
+            if (new_pwd2.length == 6) {
+                console.log("密码：",new_pwd1,new_pwd2);
+                if (new_pwd1 == new_pwd2) {
+                    $.post(postUrl, {"cardId": se_cardId, "new_password": new_pwd2,},
+                        function (data) {
+                            if(data==="success"){
+                                //window.location.href = to_location;
+                                layui.use('layer', function () {
+                                    var layer = layui.layer;
+                                    layer.msg("密码修改成功!5秒后为您跳转到业务选择页面！");
+                                    setTimeout(function () {
+                                        window.location.href="business.jsp";
+                                    },5000)
+                                });
+                            }else {
+                                alert(data);
+                            }
+
+                        }
+                    )
+                }else{
+                    layui.use('layer', function () {
+                        var layer = layui.layer;
+                        layer.msg("两次输入密码不一致，请重新输入");
+                        setTimeout(function () {
+                            window.location.href="changePassword.jsp";
+                        },3000)
+                    });
+                }
+
             }
 
 

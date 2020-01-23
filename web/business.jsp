@@ -83,7 +83,7 @@
     </section>
     <section>
         <a href="index.jsp"><img   src="static/images/exit.png"></a>
-        <a href="changePassword.jsp"> <img class="m2"   src="static/images/changepassword.png"></a>
+        <a href="checkPassword.jsp?method=changePwd"> <img class="m2"   src="static/images/changepassword.png"></a>
 
     </section>
 </div>
