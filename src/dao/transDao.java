@@ -1,5 +1,6 @@
 package dao;
 
+import entity.CardInfo;
 import entity.TransInfo;
 import util.DBhelper;
 
@@ -30,7 +31,7 @@ public class transDao {
                 String cardID = rs.getString(1);
                 Integer trans_type = rs.getInt(2);
                 Integer trans_money = rs.getInt(3);
-                Timestamp trans_date = rs.getTimestamp(4);
+                Date trans_date = rs.getDate(4);
                 String remark = rs.getString(5);
                 trans.setCardId(cardID);
                 trans.setTransType(trans_type);
@@ -49,5 +50,32 @@ public class transDao {
         return transList;
     }
 
+    /**
+     * 插入转账信息
+     * @param trans
+     * @throws SQLException
+     */
+    public void addTrans(TransInfo trans) throws SQLException {
+        Connection conn=null;
+        PreparedStatement ps=null;
+        ResultSet rs = null;
+        String sql = " insert transinfo values(?,?,?,?,?); ";
+        try {
+            conn = DBhelper.getConnection();
+            ps=conn.prepareStatement(sql);
+            ps.setString(1, trans.getCardId());
+            ps.setInt(2, trans.getTransType());
+            ps.setInt(3, trans.getTransMoney());
+            ps.setDate(4, trans.getTransDate());
+            ps.setString(5, trans.getRemark());
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            DBhelper.closeConnection(rs,ps,conn);
+        }
+
+    }
 
 }

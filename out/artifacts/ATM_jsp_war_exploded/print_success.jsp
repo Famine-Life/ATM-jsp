@@ -53,7 +53,8 @@
     </div>
     <footer>
         <a href="business.jsp"> <img id="m2" width="29%" src="static/images/return.png"></a>
-        <a href="#" onclick="alert('系统暂时无法打印凭条！')"><img id="continue" width="29%" src="static/images/print.png"></a>
+        <a href="receipt.jsp"><img id="continue" width="29%" src="static/images/print.png"></a>
+<%--        <a href="receipt.jsp" onclick="alert('系统暂时无法打印凭条！')"><img id="continue" width="29%" src="static/images/print.png"></a>--%>
 
     </footer>
 </div>

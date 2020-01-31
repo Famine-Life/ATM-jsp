@@ -53,8 +53,11 @@
             left: 20px;
         }
 
-        #m2 {
+        #m2{
             float: right;
+            cursor: pointer;
+        }
+        #continue{
             cursor: pointer;
         }
     </style>
@@ -78,7 +81,7 @@
     </div>
     <footer>
         <img id="continue" width="29%" src="static/images/continue.png">
-        <img id="m2" width="29%" src="static/images/return.png">
+        <a href="business.jsp"><img id="m2" width="29%" src="static/images/return.png"></a>
     </footer>
 </div>
 <script src="static/lib/jquery/jquery.min.js"></script>
@@ -89,10 +92,10 @@
     var method = "cunkuan";
 
     $(function () {
-        //监听存款的点击
+        //监听继续的点击
         $("#continue").click(function () {
             var money = $("input[name='money']").val();
-            if (money!=0&&money % 100 != 0) {
+            if (money==''||money==0||money % 100 != 0) {
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg("输入金额必须为100的倍数");

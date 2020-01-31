@@ -82,7 +82,7 @@
         <a href="cunkuan.jsp"> <img class="m2" style=""   src="static/images/repository.png"></a>
     </section>
     <section>
-        <a href="index.jsp"><img   src="static/images/exit.png"></a>
+        <a href="exit.jsp"><img   src="static/images/exit.png"></a>
         <a href="checkPassword.jsp?method=changePwd"> <img class="m2"   src="static/images/changepassword.png"></a>
 
     </section>

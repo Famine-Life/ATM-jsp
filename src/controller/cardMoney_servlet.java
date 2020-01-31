@@ -1,7 +1,9 @@
 package controller;
 
 import dao.cardDao;
+import dao.transDao;
 import entity.CardInfo;
+import entity.TransInfo;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletException;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 处理所有操作金额的请求
@@ -39,28 +41,42 @@ public class cardMoney_servlet extends HttpServlet {
         System.out.println("操作："+method+",money:"+money+",to_卡号:"+to_cardId);
 
 
+        //处理交易类型存档  //交易类型  存0，取1，转账2
+        Integer transType = null;
+        if(method.equals("qukuan")){
+            transType = 1;
+        }else if (method.equals("zhuanzhang")){
+            transType = 2;
+        }else if(method.equals("cunkuan")){
+            transType = 0;
+        }
+
 
         try{
+            //处理交易记录Dao对象
+            transDao transDao = new transDao();
+            TransInfo trans = new TransInfo();
+
             cardDao cardDao = new cardDao();
             //调用dao通过id获得卡号信息
             CardInfo card = cardDao.getCardById(cardId);
 
-                //查询余额
+                //查询余额-------------------------------------------------
                 if(method.equals("chaxun")){
-                response.setContentType("application/json; charset=utf-8");     //返回json
-                PrintWriter out_cx = response.getWriter();
+                    response.setContentType("application/json; charset=utf-8");     //返回json
+                    PrintWriter out_cx = response.getWriter();
 
-                Integer prestore = card.getPrestore();//预存金额
-                String allMoney = card.getMoney();   //全部余额
-                Integer usable = Integer.valueOf(allMoney)-prestore;    //可用金额
+                    Integer prestore = card.getPrestore();//预存金额
+                    String allMoney = card.getMoney();   //全部余额
+                    Integer usable = Integer.valueOf(allMoney)-prestore;    //可用金额
 
-                //拼接json  {"code":"success","allMoney":allMoney,"usable":usable}
-                String result = "{\"code\":" + "\"success\""+","+"\"allMoney\":"+"\""+ allMoney + "\"" +","+"\"usable\":"+"\""+usable+"\""+"}";
-                System.out.println("result json:"+result);
-                out_cx.write(result);
-                System.out.println("查询余额--全部金额为："+allMoney+"，可用金额："+usable);
+                    //拼接json  {"code":"success","allMoney":allMoney,"usable":usable}
+                    String result = "{\"code\":" + "\"success\""+","+"\"allMoney\":"+"\""+ allMoney + "\"" +","+"\"usable\":"+"\""+usable+"\""+"}";
+                    System.out.println("result json:"+result);
+                    out_cx.write(result);
+                    System.out.println("查询余额--全部金额为："+allMoney+"，可用金额："+usable);
 
-                out_cx.close();
+                    out_cx.close();
             }
 
             //所有操作金额的都应该在密码匹配的情况下
@@ -76,6 +92,7 @@ public class cardMoney_servlet extends HttpServlet {
                     cardDao.updateCard_money(card);
                     out.write("success");
                     System.out.println("取款"+money+"成功！");
+
 
                 }
 
@@ -123,6 +140,15 @@ public class cardMoney_servlet extends HttpServlet {
                     System.out.println("存款"+money+"成功！");
                 }
 
+                //凭条处理
+                trans.setCardId(card.getCardId());
+                trans.setTransType(transType);
+                trans.setTransDate(new java.sql.Date(new Date().getTime()));
+                trans.setTransMoney(Integer.valueOf(money));
+                trans.setRemark(to_cardId);
+                transDao.addTrans(trans);
+                //存入session
+                session.setAttribute("transInfo",trans);
 
             }else{
                 //密码不同

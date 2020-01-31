@@ -1,14 +1,13 @@
 package entity;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 public class TransInfo {
     private String cardId;  //银行卡号
-    private Integer transType;  //交易类型存0，取1，2转账
+    private Integer transType;  //交易类型  存0，取1，转账2
     private Integer transMoney;  //交易金额    转账金额为整数，用integer
     private Date transDate; //交易时间
-    private String remark;  //备注
+    private String remark;  //备注 (转入的账号)
 
     public TransInfo() {
     }

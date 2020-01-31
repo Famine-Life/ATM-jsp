@@ -57,6 +57,9 @@
             float: right;
             cursor: pointer;
         }
+        #continue{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
