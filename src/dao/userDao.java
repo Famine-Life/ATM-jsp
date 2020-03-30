@@ -74,6 +74,34 @@ public class userDao {
 		return user;
 	}
 
+	//通过username查user信息
+	public UserInfo getUsersByUsername(String username) throws SQLException {
+		Connection conn=null;
+		PreparedStatement ps=null;
+		ResultSet rs = null;
+		UserInfo user = new UserInfo();
+		String sql = "select * from userinfo where customer_name="+"\'"+username+"\'";
+		System.out.println(sql);
+		try {
+			conn=DBhelper.getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()){
+				user.setCustomerId(rs.getInt(1));
+				user.setCustomerName(rs.getString(2));
+				user.setPid(rs.getString(3));
+				user.setTelephone(rs.getString(4));
+				user.setAddress(rs.getString(5));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DBhelper.closeConnection(rs,ps,conn);
+		}
+		return user;
+	}
+
+
 	/**
 	 * 添加user的方法,,应该用不到
 	 * @param
