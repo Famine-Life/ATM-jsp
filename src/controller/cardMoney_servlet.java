@@ -60,7 +60,6 @@ public class cardMoney_servlet extends HttpServlet {
             cardDao cardDao = new cardDao();
             //调用dao通过id获得卡号信息
             CardInfo card = cardDao.getCardById(cardId);
-
                 //查询余额-------------------------------------------------
                 if(method.equals("chaxun")){
                     response.setContentType("application/json; charset=utf-8");     //返回json
@@ -84,14 +83,19 @@ public class cardMoney_servlet extends HttpServlet {
 
                 //取款功能
                 if(method.equals("qukuan")){
-                    //如果为取款操作
-                    //减去要取得金额
-                    Integer update_money=Integer.valueOf(card.getMoney())-Integer.valueOf(money);
-                    card.setMoney(update_money.toString());
-                    //扣除金额
-                    cardDao.updateCard_money(card);
-                    out.write("success");
-                    System.out.println("取款"+money+"成功！");
+                    //如果为取款操作, 并且卡内的钱比取款金额大
+                    if(Integer.valueOf(card.getMoney())>Integer.valueOf(money)){
+                        //减去要取得金额
+                        Integer update_money=Integer.valueOf(card.getMoney())-Integer.valueOf(money);
+                        card.setMoney(update_money.toString());
+                        //扣除金额
+                        cardDao.updateCard_money(card);
+                        out.write("success");
+                        System.out.println("取款"+money+"成功！");
+                    }else {
+                        System.out.println("余额不足！");
+                        out.write("buzu");
+                    }
 
 
                 }
@@ -111,6 +115,7 @@ public class cardMoney_servlet extends HttpServlet {
 
                         //转入账户
                         CardInfo to_card=cardDao.getCardById(to_cardId);
+                        System.out.println("to card id:"+to_card.getCardId());
                         Integer to_card_update_money = Integer.valueOf(to_card.getMoney()) + Integer.valueOf(money);
                         to_card.setMoney(to_card_update_money.toString());
                         cardDao.updateCard_money(to_card);

@@ -75,8 +75,8 @@
             if(data.code==="success"){
                 var allMoney = data.allMoney;
                 var usable = data.usable;
-                $("#usableMoney").text("可 用 金 额：" + usable);
-                $("#allMoney").text("全 部 金 额：" + allMoney)
+                //$("#usableMoney").text("可 用 金 额：" + usable);
+                $("#allMoney").text("余  额：" + allMoney)
             }else{
                 alert(data);
             }

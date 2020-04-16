@@ -94,7 +94,7 @@
         var money = $("input[name='money']").val();
         console.log(money);//""
         console.log(money%100!=0);//false
-        if(money!=""&&money%100!=0){
+        if(money==0||money==""||money%100!=0){
             layui.use('layer', function () {
                 var layer = layui.layer;
                 layer.msg("输入金额必须为100的倍数");

@@ -86,11 +86,12 @@ public class cardDao {
         PreparedStatement ps=null;
         ResultSet rs = null;
         CardInfo card = new CardInfo();
-        String sql = "select * from cardinfo where card_id="+id;
+        String sql = "select * from cardinfo where card_id=?";
         System.out.println(sql);
         try {
              conn= DBhelper.getConnection();
              ps = conn.prepareStatement(sql);
+             ps.setString(1,id);
              rs = ps.executeQuery();
             while(rs.next()){
                 card.setCardId(rs.getString(1));
@@ -108,6 +109,7 @@ public class cardDao {
         }finally{
             DBhelper.closeConnection(rs,ps,conn);
         }
+        System.out.println(card.toString());
         return card;
     }
 

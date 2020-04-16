@@ -109,7 +109,7 @@ $(function () {
     //删除按钮
     $(".delete-btn").click(function () {
         let cardId = $(this).attr("value");
-        var i = confirm("确定删除吗？数据将无法恢复!");
+        var i = confirm("确定销户吗？数据将无法恢复!");
         if(i){
             $.post("admin",{"method":"delete","cardId":cardId},
                 function (res) {

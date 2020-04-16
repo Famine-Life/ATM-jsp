@@ -90,7 +90,7 @@
         //监听取款的点击
         $("#continue").click(function () {
             var money = $("input[name='money']").val();
-            if(money%100!=0){
+            if(money%100!=0||money==0){
                 layui.use('layer', function () {
                     var layer = layui.layer;
                     layer.msg("输入金额必须为100的倍数");
@@ -99,6 +99,11 @@
                 location = location+"?method="+method+"&money="+money;
                 window.location.href=location;
             }
+        });
+
+        //返回按钮的点击
+        $("#m2").click(function () {
+            window.location.href="qukuan.jsp";
         });
 
     })
