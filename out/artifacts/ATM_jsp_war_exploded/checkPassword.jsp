@@ -83,7 +83,7 @@
 
         console.log(method,money,to_cardId);
         var layer = layui.layer;
-
+        var inputPwdNum=1;
         /*输入框js事件*/
         $(".password-div input").on("input", function (e) { //标签为password-div下的input添加oninput事件
             var number = 6;   //定义输入最大值
@@ -109,6 +109,15 @@
                             layer.msg("密码错误，请重新输入。");
                             $("input[name = 'password']").val("");
                             $(".password-div ul li").text("");
+                            if(inputPwdNum===3){
+                                console.log("密码错误达到3次。");
+                                layer.msg("密码错误达到3次！3秒后为你返回ATM机主页面。");
+                                setTimeout(function () {
+                                    window.location.href="index.jsp";
+                                },3000)
+                            }else {
+                                inputPwdNum++;
+                            }
                         }else if(data==="buzu"){
                             layer.msg("余额不足, 5秒后为你返回业务选择页面！");
                             setTimeout(function () {

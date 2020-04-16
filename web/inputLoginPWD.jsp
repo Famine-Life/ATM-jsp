@@ -50,6 +50,9 @@
 <script src="static/lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
     layui.use('layer', function () {
+        //限制密码输入错误的次数
+        var inputPwdNum = 1;
+
         var layer = layui.layer;
         //获取卡号
         var cardId = "<%=request.getParameter("cardId")%>";
@@ -80,6 +83,15 @@
                             layer.msg("密码错误！");
                             $("input[name = 'password']").val("");
                             $(".password-div ul li").text("");
+                            if(inputPwdNum===3){
+                                console.log("密码错误达到3次。");
+                                layer.msg("密码错误达到3次！3秒后为你返回ATM机主页面。");
+                                setTimeout(function () {
+                                    window.location.href="index.jsp";
+                                },3000)
+                            }else {
+                                inputPwdNum++;
+                            }
                         }
                 });
             }
