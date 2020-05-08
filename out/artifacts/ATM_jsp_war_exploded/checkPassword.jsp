@@ -111,9 +111,9 @@
                             $(".password-div ul li").text("");
                             if(inputPwdNum===3){
                                 console.log("密码错误达到3次。");
-                                layer.msg("密码错误达到3次！3秒后为你返回ATM机主页面。");
+                                layer.msg("密码错误达到3次！3秒后为你返回业务选择页面。");
                                 setTimeout(function () {
-                                    window.location.href="index.jsp";
+                                    window.location.href="business.jsp";
                                 },3000)
                             }else {
                                 inputPwdNum++;

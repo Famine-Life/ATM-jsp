@@ -78,8 +78,14 @@ public class admin_servlet extends HttpServlet {
         if(method.equals("new")){
             //新建操作
             try{
-                cardDao.addCard(card);
-                out.write("新加银行卡成功!");
+                //判断是否存在该卡号
+                CardInfo cardById = cardDao.getCardById(card.getCardId());
+                if(cardById.getCardId()!=null){
+                    out.write("该卡号已存在!");
+                }else{
+                    cardDao.addCard(card);
+                    out.write("新加银行卡成功!");
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }
